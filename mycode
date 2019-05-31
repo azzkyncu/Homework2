@@ -1,0 +1,48 @@
+Sub ticker_volume()
+
+  ' Set an initial variable for holding the brand name
+  Dim Ticker_Name As String
+
+  ' Set an initial variable for holding the total per credit card brand
+  Dim Vol_Total As Double
+  Vol_Total = 0
+
+  ' Keep track of the location for each ticker in the summary table
+  Dim Summary_Table_Row As Integer
+  Summary_Table_Row = 2
+
+  ' Loop through all ticker types
+  For i = 2 To 797711
+
+    ' Check if we are still within the ticker, if it is not...
+    If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
+
+      ' Set the Ticker name
+      Ticker_Name = Cells(i, 1).Value
+
+      ' Add to the volume Total
+      Vol_Total = Vol_Total + Cells(i, 7).Value
+
+      ' Print the ticker name in the Summary Table
+      Range("K" & Summary_Table_Row).Value = Ticker_Name
+
+      ' Print the total volum to the Summary Table
+      Range("L" & Summary_Table_Row).Value = Vol_Total
+
+      ' Add one to the summary table row
+      Summary_Table_Row = Summary_Table_Row + 1
+      
+      ' Reset the volume Total
+      Vol_Total = 0
+
+    ' If the cell immediately following a row is the same ticker...
+    Else
+
+      ' Add to the total volume
+      Vol_Total = Vol_Total + Cells(i, 7).Value
+
+    End If
+
+  Next i
+
+End Sub
